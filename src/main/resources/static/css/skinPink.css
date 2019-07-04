@@ -1,0 +1,172 @@
+/*
+*现css作用:没有设置，默认的css样式
+*/
+/*
+时间:2018年6月2日21:05:02
+作用:提取页面一些公共的css样式的颜色  background-color color background:rgba(0,0,0,.8)半透明度
+命名以  .ysBg_title (背景颜色) .ysColor_title(文字的颜色和字体图标的颜色)
+border 的颜色
+*/
+.ysBg_header{
+    background: #ffb6c1;
+}
+.ysBg_body{
+    background-color: #eff7ff !important;
+}
+.head_menu li.ysCl_header_font{
+    color: #FFFFFF;
+}
+.ysCl_header_active{
+    color: red;
+}
+.ys_BdCl{
+    border-color:#ff0000;
+}
+
+/*修改页面颜色*/
+.g_sidebar{
+    background-color: #fff;
+}
+.g_main_box{
+    background-color: #fff;
+    box-shadow: 0 0 8px #cac8c8;
+}
+.g_sidebar .treeview-menu li.active>a{
+    background-color: #f5f7fa;
+    border-left-color: #ffb6c1;
+    color: #ffb6c1;
+}
+.g_sidebar li>a:hover{
+    background-color: #f5f7fa;
+    border-left-color: #ffb6c1;
+}
+.g_sidebar .treeview-menu >li>a{
+    color: #5f6269;
+}
+.g_sidebar li>a{
+    color: #5f6269;
+}
+.g_sidebar li a b.triangle-left{
+    border-left-color: #5f6269;
+}
+.search_btn{
+    background: #ffb6c1;
+}
+.page li:hover, .page li.active{
+    background: #ffb6c1;
+    border-color: #ffb6c1;
+}
+.table>thead {
+    background: #f5f7fa;
+}
+.advanced_search_btn{
+    color: #ffb6c1;
+}
+.advanced_search_btn:hover, .advanced_search_btn:focus{
+    color: #ffb6c1;
+}
+div.mc_bgfn_search_btn{
+    background-color: #ffb6c1;
+    color: #ffffff;
+    border-radius: 5px;
+}
+/*界面按钮*/
+.mc_btn.focus, .mc_btn:focus, .mc_btn:hover {
+    text-decoration: none;
+    color: #1e9ad9;
+}
+.mc_span_border{
+    border: 1px solid #1e9ad9;
+    width: calc(100% - 20px);
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+/*改变layer的透明度*/
+body div.layui-layer-shade{
+    opacity: 0.1 !important;
+}
+.mc_tabCont_color{
+    color: #1e9ad9;
+}
+.layui-layer .layui-layer-btn a{
+    border: 1px solid #2e8dec;
+    background-color: #2e8dec;
+    color: #ffffff;
+}
+.layui-layer div.layui-layer-btn a:hover{
+    background-color: #2e8dec;
+}
+.layui-layer .layui-layer-btn a:last-child{
+    border: 1px solid #2e8dec;
+    color: #2e8dec;
+    background-color: #ffffff;
+}
+.layui-layer .layui-layer-btn a:last-child:hover{
+    background-color: #ffffff;
+}
+.mc-my-skin .layui-layer-btn a.layui-layer-btn0{
+    background-color: #e1060a;
+    color: #FFFFFF;
+    border: 1px solid #e1060a;
+}
+.mc-my-skin .layui-layer-btn a.layui-layer-btn0:hover{
+    background-color: #e1060a;
+}
+.g_sidebar li.active>a{
+    border-left-color: #ffb6c1;
+}
+.m_screen_div p .date_btn.active{
+    background: #ffb6c1;
+    border-color: #ffb6c1;
+    color: #FFF;
+    border-radius: 5px;
+}
+.blue_btn{
+    background-color: #ffb6c1;
+}
+li.operation li#save{
+    background-color: #1e9ad9;
+}
+li.operation li:hover{
+    color: #1e9ad9;
+}
+.mc_btn_sure_disable{
+    background: #F5F7FA !important;
+    border-color: #D6DAE3 !important;
+    color: #7f8187 !important;
+    border: 1px solid currentColor !important;
+    cursor: no-drop !important;
+}
+.search_btn:hover{
+    background-color: #ffb6c1;
+}
+.mc_prompt_ft_color{
+    color: red;
+}
+.m_screen_div .mt10 .btn:hover {
+    border-color: #ffb6c1;
+    background: #FFF;
+    color: #ffb6c1;
+}
+.table>tbody>tr:hover>td .btn{
+    color: #ffb6c1;
+    border-color: #ffb6c1;
+}
+.table>tbody>tr>td .btn:hover{
+    background:#ffb6c1;
+    border-color: #ffb6c1;
+    color: #FFF;
+}
+.blue_btn:hover{
+    color: #FFF;
+    background: #ffb6c1;
+}
+.btn-info.active.focus, .btn-info.active:focus, .btn-info.active:hover, .btn-info:active.focus, .btn-info:active:focus, .btn-info:active:hover, .open>.dropdown-toggle.btn-info.focus, .open>.dropdown-toggle.btn-info:focus, .open>.dropdown-toggle.btn-info:hover {
+    color: #FFF;
+    border-color: #ffb6c1;
+    background: #ffb6c1;
+}
+.search_btn:focus{
+    background: #ffb6c1;
+}

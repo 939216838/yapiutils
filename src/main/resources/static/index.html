@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>配置中心</title>
+  <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <ul class="layui-nav">
+    <li class="layui-logo layui-nav-item" onclick="indexClick()">YAPI接口辅助工具</li>
+  </ul>
+<!--  <div class="layui-header">-->
+<!--    <div id="index"  class="layui-logo layui-btn " onclick="indexClick()">媒体云配置中心</div>-->
+<!--  </div>-->
+<!--  -->
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+        <a class="" href="javascript:;" lay-url="initInterface.html">接口初始化</a>
+      </li>
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;" lay-url="EnAndCn.html">中英文对照表</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body">
+    <!-- 内容主体区域 -->
+    <div class="layui-tab tab" lay-filter="mainTab" lay-allowclose="false" id="yscontent">
+      <blockquote class="layui-elem-quote">
+        <h1>请选择功能菜单</h1>
+        <hr>
+        <h3>一. 接口初始化</h3>
+        <h4>&nbsp;&nbsp;&nbsp;&nbsp;1. 根据项目id初始化接口</h4>
+        <h4>&nbsp;&nbsp;&nbsp;&nbsp;2. 根据接口id初始化接口</h4>
+        <h4>&nbsp;&nbsp;&nbsp;&nbsp;3. 在Yapi项目设置获取工具需要的<b>Token</b></h4>
+        <h3>二. 中英文对照表</h3>
+        <h4>&nbsp;&nbsp;&nbsp;&nbsp;1. 可以查看系统里已经录入的中英文对照表,点击可以修改中文翻译</h4>
+        <h4>&nbsp;&nbsp;&nbsp;&nbsp;2. 点击加入可以增加属性对照,若Key已存在会更新</h4>
+
+
+      </blockquote>
+    </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    北京阳光云视科技有限公司 Copyright © 2018 阳光云视 All Rights Reserved
+  </div>
+</div>
+</div>
+
+<script src="../layui/layui.js"></script>
+<script>
+//JavaScript代码区域
+layui.config({
+    base: '/layui/modules/'      //自定义layui组件的目录
+}).extend({ //设定组件别名
+    common:   'common',
+});
+layui.use(['element', 'layer', 'jquery'], function(){
+  var element = layui.element;
+         var $ = layui.$;
+        // 配置tab实践在下面无法获取到菜单元素
+        $('.layui-nav-tree li').on('click', function () {
+            var dataid = $(this).children('a');
+            $("#yscontent").load(dataid.attr("lay-url"));
+        });
+ 
+});
+function indexClick() {
+  //重新加载父页面
+  parent.location.reload();
+}
+</script>
+</body>
+</html>

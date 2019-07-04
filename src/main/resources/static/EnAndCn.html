@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>配置中心</title>
+</head>
+<body class="layui-layout-body">
+<div class="layui-tab">
+  <ul class="layui-tab-title">
+    <li class="layui-this">根据接口id初始化接口</li>
+    <li></li>
+  </ul>
+  <div class="layui-tab-content">
+    <div class="layui-tab-item layui-show">
+
+      <div class="layui-fluid">
+        <div class="layui-row layui-col-space15">
+          <div class="layui-col-md12">
+            <div class="layui-card">
+              <div class="layui-card-body">
+                <blockquote class="layui-elem-quote">点击下面表格中的【值】，可直接修改参数<button class="layui-btn layui-btn-normal" id="initglobal">初始化global</button></blockquote>
+                <table class="layui-hide" id="test-table-demoEvent" lay-filter="test-table-demoEvent"></table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="layui-tab-item">
+      <button class="layui-btn layui-btn-normal" id="initOther">根据项目id初始化接口</button>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript" src="../js/vlog.js"></script>
+</html>
