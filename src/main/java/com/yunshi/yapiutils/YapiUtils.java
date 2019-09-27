@@ -347,7 +347,7 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
      * 控制台输入配置文件里未包含的中英文对照
      */
     public String inputCnEnTable(String strEn) {
-        System.out.println("对照表中未包含" + strEn + "请输入中文对照");
+        System.out.println("对照表中未包含  " + strEn + "  请输入中文对照");
 
         Scanner scan = new Scanner(System.in);
         String read = scan.nextLine();
