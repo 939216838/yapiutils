@@ -240,7 +240,6 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
                                   @RequestParam("token") String token) {
 
         String url = yapiUrl + YapiOpenApiInterface.updateInterface + "?token=" + token + "&id=" + id;
-// TODO 这里传入修改的id
         String json = this.getInterfaceById(id, token);
         HashMap hashMap = JSON.parseObject(json, HashMap.class);
         Map<String, Object> data = (Map<String, Object>) hashMap.get("data");
