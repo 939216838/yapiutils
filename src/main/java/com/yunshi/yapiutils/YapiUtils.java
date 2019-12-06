@@ -254,7 +254,8 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
                     String properties = this.getProperties(name);
                     if (StringUtils.isEmpty(properties)) {
                         String valus = inputCnEnTable(name);
-                        map.put("desc", valus);
+                        // todo 临时更改为 key
+                        map.put("desc", name);
 
                     } else {
                         map.put("desc", properties);
@@ -305,7 +306,8 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
                         String properties = this.getProperties(entryKey);
                         if (StringUtils.isEmpty(properties)) {
                             String valus = inputCnEnTable(entryKey);
-                            value.put("description", valus);
+                            // todo 临时更改为value
+                            value.put("description", entryKey);
 
                         } else {
                             value.put("description", properties);
@@ -367,7 +369,7 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
 
             Properties properties = new Properties();
 
-            InputStream in = new FileInputStream("src/main/resources/Chinese-EnglishContrastTable.properties");
+            InputStream in = new FileInputStream("src/main/resources/temp2.properties");
 
             // 使用properties对象加载输入流
             properties.load(in);
@@ -375,7 +377,7 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
             //获取key对应的value值
             properties.setProperty(strEn, strCn);
 
-            OutputStream outputStream = new FileOutputStream("src/main/resources/Chinese-EnglishContrastTable.properties");
+            OutputStream outputStream = new FileOutputStream("src/main/resources/temp2.properties");
 
             properties.store(outputStream, LocalDateTime.now().toString());
             outputStream.flush();
