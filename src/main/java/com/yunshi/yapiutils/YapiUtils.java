@@ -1,9 +1,9 @@
 package com.yunshi.yapiutils;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.Ordered;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.ConfigurableWebApplicationContext;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.servlet.ServletContext;
 import java.io.*;
@@ -27,41 +25,22 @@ import java.util.concurrent.ConcurrentSkipListSet;
  * @Created by shanhongfeng
  */
 @RestController
-public class YapiUtils extends WebMvcConfigurerAdapter {
+public class YapiUtils {
 
     private static Logger logger = Logger.getLogger(YapiUtils.class);
-    String yapiUrl = "https://yapi.yunshicloud.com";
-    // 媒资4.0 Token
-//    String token = "?token=74211c4764ffd21bafff266b344a13a18ae8e81a8c6131a6662552008085131f";
 
-    // 媒体云事业部 / 媒体云上层(生产相关) Token
-//    String token = "?token=bd30e73726eef33290096d8a5080067e1d216f0e0dcb4edbefa2c28e69da632f";
+    String yapiUrl = "https://yapi.yunshicloud.com";
+
     String commonPage = "&page=1&limit=1000";
+
     @Autowired
     private RestTemplate restTemplate;
+
     @Autowired
     private ServletContext servletContext;
 
     @Autowired
     private ConfigurableWebApplicationContext configurableWebApplicationContext;
-    /**
-     * 欢迎使用YapiUtils
-     *
-     * @return
-     */
-    @GetMapping("/")
-    public String hello() {
-
-        return "index";
-    }
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index.html");
-        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        super.addViewControllers(registry);
-    }
-
 
     /**
      * 获取单个项目基本信息
@@ -236,8 +215,8 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
      * @return
      */
     @GetMapping("/api/interface/up")
-    public String updateInterface(@RequestParam(value = "id", required = false) String id,
-                                  @RequestParam("token") String token) {
+    public String updateInterfaceById(@RequestParam(value = "id", required = false) String id,
+                                      @RequestParam("token") String token) {
 
         String url = yapiUrl + YapiOpenApiInterface.updateInterface + "?token=" + token + "&id=" + id;
         String json = this.getInterfaceById(id, token);
@@ -245,6 +224,7 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
         Map<String, Object> data = (Map<String, Object>) hashMap.get("data");
         System.out.println("开始修改接口 [ " + data.get("title") + " ] ");
         data.put("id", data.get("_id"));
+        data.put("status","done");
 
         List<Map<String, Object>> req_query = (List<Map<String, Object>>) data.get("req_query");
         for (Map<String, Object> map : req_query) {
@@ -254,9 +234,7 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
                     String properties = this.getProperties(name);
                     if (StringUtils.isEmpty(properties)) {
                         String valus = inputCnEnTable(name);
-                        // todo 临时更改为 key
-                        map.put("desc", name);
-
+                        map.put("desc", valus);
                     } else {
                         map.put("desc", properties);
                     }
@@ -306,9 +284,7 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
                         String properties = this.getProperties(entryKey);
                         if (StringUtils.isEmpty(properties)) {
                             String valus = inputCnEnTable(entryKey);
-                            // todo 临时更改为value
-                            value.put("description", entryKey);
-
+                            value.put("description", valus);
                         } else {
                             value.put("description", properties);
                         }
@@ -316,14 +292,11 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
                         continue;
                     }
                 } else {
-
                     String properties = this.getProperties(entryKey);
                     if (StringUtils.isEmpty(properties)) {
                         this.insertProperties(entryKey, String.valueOf(value.get("description")));
                     }
-
                 }
-
                 if (value.containsKey("properties")) {
                     Map<String, Object> properties = (Map<String, Object>) value.get("properties");
                     recursionMap(properties);
@@ -335,10 +308,7 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
                         recursionMap(properties);
                     }
                 }
-
                 System.out.println(value);
-
-
             }
         }
         return -1;
@@ -348,13 +318,17 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
      * 控制台输入配置文件里未包含的中英文对照
      */
     public String inputCnEnTable(String strEn) {
-        System.out.println("对照表中未包含  " + strEn + "  请输入中文对照");
 
+        System.out.println("对照表中未包含  " + strEn + "  请输入中文对照");
         Scanner scan = new Scanner(System.in);
         String read = scan.nextLine();
         System.out.println("您输入的是" + read + ",现在加入到配置文件中");
-        this.insertProperties(strEn, read);
-        return read;
+        if (StrUtil.isEmpty(read)) {
+            return strEn;
+        } else {
+            this.insertProperties(strEn, read);
+            return read;
+        }
 
     }
 
@@ -369,7 +343,7 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
 
             Properties properties = new Properties();
 
-            InputStream in = new FileInputStream("src/main/resources/temp2.properties");
+            InputStream in = new FileInputStream("src/main/resources/Chinese-EnglishContrastTable.properties");
 
             // 使用properties对象加载输入流
             properties.load(in);
@@ -377,17 +351,11 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
             //获取key对应的value值
             properties.setProperty(strEn, strCn);
 
-            OutputStream outputStream = new FileOutputStream("src/main/resources/temp2.properties");
+            OutputStream outputStream = new FileOutputStream("src/main/resources/Chinese-EnglishContrastTable.properties");
 
             properties.store(outputStream, LocalDateTime.now().toString());
             outputStream.flush();
             outputStream.close();
-            //重新加载元数据
-//            XmlWebApplicationContext context = (XmlWebApplicationContext) WebApplicationContextUtils.getWebApplicationContext(servletContext);
-//            context.refresh();
-//重新load所有bean
-//            configurableWebApplicationContext.refresh();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -400,22 +368,16 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
      * @return
      */
     public String getProperties(String key) {
+
         String value = "";
+        Properties properties = new Properties();
         try {
-            Properties properties = new Properties();
-            // 使用ClassLoader加载properties配置文件生成对应的输入流
-            InputStream in = YapiUtils.class.getClassLoader().getResourceAsStream("Chinese-EnglishContrastTable.properties");
-
-
-            properties.load(in);
-            //获取key对应的value值
-            value = properties.getProperty(key);
-
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
+            //获取最新的
+            properties.load(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("Chinese-EnglishContrastTable.properties"), "UTF-8"));
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
+        value = properties.getProperty(key);//获取最新的ak配置
 
         return value;
     }
@@ -458,7 +420,7 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
         }
         System.out.println("最后接口全部的id是  + " + concurrentSkipListSet.toString());
         for (Object str : concurrentSkipListSet) {
-            this.updateInterface(String.valueOf(str), token);
+            this.updateInterfaceById(String.valueOf(str), token);
 
         }
 
@@ -488,9 +450,9 @@ public class YapiUtils extends WebMvcConfigurerAdapter {
     public String initByInterfaceId(@RequestParam("id") String id,
                                     @RequestParam("token") String token) {
 
-        this.updateInterface(String.valueOf(id), token);
+        String s = this.updateInterfaceById(String.valueOf(id), token);
 
-        return "成功";
+        return s;
     }
 
 

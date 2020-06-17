@@ -1,0 +1,87 @@
+{
+  "req_query": [
+    {
+      "name": "companyId",
+      "required": "1",
+      "example": "458120B51A324F5F",
+      "desc": "租户标识"
+    },
+    {
+      "name": "userId",
+      "required": "1",
+      "example": "9297AD0F774B4624BB6274E4093DAE05",
+      "desc": "用户标识"
+    },
+    {
+      "name": "appCode",
+      "required": "1",
+      "example": "QMTNRK_YUNSHI",
+      "desc": "应用标识"
+    },
+    {
+      "name": "serviceCode",
+      "required": "1",
+      "example": "",
+      "desc": "服务标识"
+    },
+    {
+      "name": "versionId",
+      "required": "1",
+      "example": "v1",
+      "desc": "版本Id"
+    },
+    {
+      "name": "sort",
+      "required": "1",
+      "example": "",
+      "desc": "排序条件"
+    },
+    {
+      "name": "sortVal",
+      "required": "1",
+      "example": "",
+      "desc": "sortVal"
+    },
+    {
+      "name": "startTime",
+      "required": "1",
+      "example": "",
+      "desc": "开始时间"
+    },
+    {
+      "name": "endTime",
+      "required": "1",
+      "example": "",
+      "desc": "结束时间"
+    },
+    {
+      "name": "findByCompanyId",
+      "required": "1",
+      "example": "",
+      "desc": "需要查询的租户"
+    }
+  ],
+  "req_headers": [
+    {
+      "name": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "req_body_form": [],
+  "title": "生产总览 -导出--稿件详情列表",
+  "catid": "4350",
+  "path": "/api/config/production/v1/catalogue/detailsExport",
+  "tag": [],
+  "status": "done",
+  "req_body_is_json_schema": true,
+  "res_body_is_json_schema": true,
+  "res_body_type": "json",
+  "res_body": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{}}",
+  "switch_notice": true,
+  "api_opened": false,
+  "desc": "",
+  "markdown": "",
+  "method": "GET",
+  "req_params": [],
+  "id": "24901"
+}
