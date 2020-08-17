@@ -1,5 +1,6 @@
 package com.yunshi.yapiutils;
 
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import org.apache.log4j.Logger;
@@ -248,10 +249,12 @@ public class YapiUtils {
         if (!StringUtils.isEmpty(resBody)) {
             Map map = JSON.parseObject(resBody, Map.class);
             Map<String, Object> properties = (Map<String, Object>) map.get("properties");
-            this.recursionMap(properties);
-            map.put("properties", properties);
-            String s = JSON.toJSONString(map);
-            data.put("res_body", s);
+            if (MapUtil.isNotEmpty(properties)) {
+                this.recursionMap(properties);
+                map.put("properties", properties);
+                String s = JSON.toJSONString(map);
+                data.put("res_body", s);
+            }
         }
 
         String reqBodyOther = (String) data.get("req_body_other");
@@ -409,7 +412,7 @@ public class YapiUtils {
         }
         System.out.println(catIds.toString());
         for (String catId : catIds) {
-            String listCatByCatId = getListCatByCatId(catId, token);
+            String listCatByCatId = this.getListCatByCatId(catId, token);
             System.out.println("接口列表是" + listCatByCatId);
             Map map = JSON.parseObject(listCatByCatId, Map.class);
             Map mapIds = (Map) map.get("data");
@@ -423,6 +426,7 @@ public class YapiUtils {
             this.updateInterfaceById(String.valueOf(str), token);
 
         }
+        logger.info("共修改 "+concurrentSkipListSet.size()+" 个接口");
 
         return "成功";
     }
@@ -434,8 +438,24 @@ public class YapiUtils {
      * @return
      */
     @GetMapping("/initByCat")
-    public String initByCat(@RequestParam("id") String id) {
+    public String initByCat(@RequestParam(value = "catId", required = false) String catId,
+                            @RequestParam("token") String token) {
 
+        ConcurrentSkipListSet concurrentSkipListSet = new ConcurrentSkipListSet();
+        String listCatByCatId = this.getListCatByCatId(catId, token);
+        System.out.println("接口列表是" + listCatByCatId);
+        Map map = JSON.parseObject(listCatByCatId, Map.class);
+        Map mapIds = (Map) map.get("data");
+        List<Map<String, Object>> interfaceIds = (List<Map<String, Object>>) mapIds.get("list");
+        for (Map<String, Object> interfaceId : interfaceIds) {
+            concurrentSkipListSet.add(interfaceId.get("_id"));
+        }
+        System.out.println("最后接口全部的id是  + " + concurrentSkipListSet.toString());
+        for (Object str : concurrentSkipListSet) {
+            this.updateInterfaceById(String.valueOf(str), token);
+
+        }
+        logger.info("共修改 "+concurrentSkipListSet.size()+" 个接口");
 
         return "成功";
     }
